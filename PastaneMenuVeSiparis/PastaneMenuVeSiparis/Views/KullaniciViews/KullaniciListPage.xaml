@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PastaneMenuVeSiparis.Views.KullaniciViews.KullaniciListPage"
+             Title="Yönetici Listesi"
+             x:Name="kullaniciListPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ekle" Command="{Binding InsertCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <RefreshView Command="{Binding RefreshCommand}"
+                 IsRefreshing="{Binding IsBusy}">
+            <ScrollView>
+                <StackLayout Padding="5,10">
+                    <Grid Padding="8" ColumnDefinitions="*,*,*,*">
+                        <Label Text="Kullanıcı AdSoyad"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                        <Label Grid.Column="1"
+                                   Text="Kullanıcı adı"
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="End"/>
+                    </Grid>
+
+                    <Rectangle Background="Gray" HeightRequest="1"/>
+
+                    <ListView ItemsSource="{Binding Items}" HasUnevenRows="True">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="8" ColumnDefinitions="*,*,*,*">
+                                        <Label Text="{Binding AdSoyad}"
+                                   VerticalOptions="Center"/>
+                                        <Label Grid.Column="1"
+                                   Text="{Binding KullaniciAdi}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="End"/>
+                                    </Grid>
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Text="Sil"
+                                      Command="{Binding Source={x:Reference kullaniciListPage}, Path=BindingContext.DeleteCommand}"
+                                      CommandParameter="{Binding .}"/>
+                                        <MenuItem Text="Güncelle"
+                                      Command="{Binding Source={x:Reference kullaniciListPage}, Path=BindingContext.UpdateCommand}"
+                                      CommandParameter="{Binding .}"/>
+                                    </ViewCell.ContextActions>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>
